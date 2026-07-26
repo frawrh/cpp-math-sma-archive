@@ -1,0 +1,57 @@
+//masukan
+//cek apakah C & D sama, jika ya langsung jumlahkan A & B
+//jika beda, kalikan C & D dulu, lalu A*D & B*C, baru jumlahkan A & B
+//cek gcd, cout
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void cekFPB(long long E, long long F) {
+
+    if(E % F == 0) {
+        E = E / F;
+        F = 1;
+    } else if(F % E == 0) {
+        F = F / E;
+        E = 1;
+    }
+    
+    while (gcd(E, F) != 1) {
+        for(int i = 2; i * i <= E; i++) {
+            if(E % i == 0 && F % i == 0) {
+                E /= i;
+                F /= i;
+            }
+            if(gcd(E, F) == 1) {
+                break;
+            }
+        }
+    }
+    
+    cout << E << " " << F << endl;
+}
+
+void jumlahkan(int A, long long B, int C, long long D) {
+    
+    long long E, F;
+    
+    if(C != D) {
+        F = B * D;
+        E = (A * D) + (B * C);
+    } else {
+        F = C;
+        E = A + B;
+    }
+    
+    cekFPB(E, F);
+}
+
+int main() {
+    int A, C;
+    long long B, D;
+    
+    cin >> A >> B;
+    cin >> C >> D;
+    
+    jumlahkan(A, B, C, D);
+}
